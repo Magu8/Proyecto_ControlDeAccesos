@@ -1,0 +1,90 @@
+<div class="flex flex-row justify-around gap-2 p-8">
+    <div>
+        <h2>Tareas</h2>
+        <div cdkDropList class="example-list flex flex-col gap-4 h-5/6 w-64" #tareasList="cdkDropList"
+            [cdkDropListData]="tareas" [cdkDropListConnectedTo]="[tareasmarkel,tareasmaria,tareasjavi]"
+            (cdkDropListDropped)="drop($event,'tarea')">
+            @for (tarea of tareas; track tarea) {
+            <div class=" flex flex-row justify-between bg-stone-100 p-6 border-l-4 border-red-500" cdkDrag>
+                {{tarea.descripcion}}
+                <button (click)="eliminarTarea(tarea._id)">❌</button>
+            </div>
+
+            }
+            @if (formulario) {
+            <div class="tareas bg-stone-100 p-6 border-l-4 border-red-500" cdkDrag [cdkDragDisabled]="true">
+                <label for="tarea">Tarea:</label>
+                <input type="text" name="tarea" id="tarea" [(ngModel)]="descripcion">
+                <div>
+                    <button class="bg-red-400 rounded text-sm mt-2 p-1 hover:bg-red-500"
+                        (click)="newTaks(descripcion)">Crear</button>
+                    <button (click)="formulario=false" class="ml-1 text-red-500">X</button>
+                </div>
+            </div>
+            }@else {
+            <button class="bg-slate-300 rounded self-center w-12 text-xl hover:bg-slate-400"
+                (click)="formulario = true">+</button>
+            }
+        </div>
+    </div>
+    <div>
+        <h2>Tareas Maria</h2>
+        <div cdkDropList class="example-list flex flex-col gap-4 h-5/6 w-64" #tareasmaria="cdkDropList"
+            [cdkDropListData]="tareasMaria"
+            [cdkDropListConnectedTo]="[tareasList, tareasmarkel, tareasjavi, completadasList]"
+            (cdkDropListDropped)="drop($event,workers[0].sub)">
+            @for (maria of tareasMaria; track tareasMaria) {
+            <div class=" flex flex-row justify-between bg-stone-100 p-6 border-l-4 border-blue-500" cdkDrag>
+                {{maria.descripcion}}
+                <button (click)="eliminarTarea(maria._id)">❌</button>
+            </div>
+            }
+        </div>
+    </div>
+    <div>
+        <h2>Tareas Markel</h2>
+        <div cdkDropList class="example-list flex flex-col gap-4 h-5/6 w-64" #tareasmarkel="cdkDropList"
+            [cdkDropListData]="tareasMarkel"
+            [cdkDropListConnectedTo]="[tareasList, tareasmaria, tareasjavi, completadasList]"
+            (cdkDropListDropped)="drop($event, workers[1].sub)">
+            @for (markel of tareasMarkel; track tareasMarkel) {
+            <div class=" flex flex-row justify-between bg-stone-100 p-6 border-l-4 border-purple-500" cdkDrag>
+                {{markel.descripcion}}
+                <button (click)="eliminarTarea(markel._id)">❌</button>
+            </div>
+            }
+        </div>
+    </div>
+    <div>
+        <h2>Tareas javi</h2>
+        <div cdkDropList class="example-list flex flex-col gap-4 h-5/6 w-64" #tareasjavi="cdkDropList"
+            [cdkDropListData]="tareasJavi"
+            [cdkDropListConnectedTo]="[tareasList, tareasmaria, tareasmarkel, completadasList]"
+            (cdkDropListDropped)="drop($event,workers[2].sub)">
+            @for (javi of tareasJavi; track tareasJavi) {
+            <div class=" flex flex-row justify-between bg-stone-100 p-6 border-l-4 border-orange-500" cdkDrag>
+                {{javi.descripcion}}
+                <button (click)="eliminarTarea(javi._id)">❌</button>
+            </div>
+            }
+        </div>
+    </div>
+    <div>
+        <h2>Done</h2>
+        <div cdkDropList class="example-list flex flex-col gap-4 h-5/6 w-72" #completadasList="cdkDropList"
+            [cdkDropListData]="Completadas" [cdkDropListConnectedTo]="[tareasList]"
+            (cdkDropListDropped)="drop($event,'completado')">
+            @for (comp of Completadas; track Completadas) {
+            <div class=" flex flex-col justify-between bg-stone-100 p-6 border-l-4 border-green-500" cdkDrag>
+                <div class="flex flex-row justify-between">
+                    <p>{{comp.descripcion}}</p>
+                    <button (click)="eliminarTarea(comp._id)">❌</button>
+                </div>
+                <p class="text-xs mt-4">Última asignación:</p>
+                <p class="text-xs">{{comp.responsable.nombre}}</p>
+            </div>
+            }
+        </div>
+    </div>
+
+</div>

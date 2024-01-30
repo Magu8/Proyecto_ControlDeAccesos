@@ -1,0 +1,38 @@
+<body>
+  <div class="box">
+    <span class="borderLine"></span>
+    <form (ngSubmit)="workerLogin(login)">
+      <h2>Irontec·</h2>
+      <div class="inputBox">
+        <input
+          type="text"
+          required
+          name="username"
+          [(ngModel)]="login.username"
+        />
+        <span>Usuario</span>
+        <i></i>
+      </div>
+      <div class="inputBox">
+        <input
+          type="password"
+          required
+          name="password"
+          [(ngModel)]="login.password"
+        />
+        <span>Contraseña</span>
+        <i></i>
+      </div>
+      <div class="links"></div>
+      <input type="submit" value="Iniciar Sesión" />
+
+      <div class="rellenarCampo">
+        <p [hidden]="rellenaCampos">Rellena los campos</p>
+      </div>
+
+      <div class="rellenarCampo2">
+        <p [hidden]="UsuarioContraErroneo">Usuario o contraseña incorrectos</p>
+      </div>
+    </form>
+  </div>
+</body>

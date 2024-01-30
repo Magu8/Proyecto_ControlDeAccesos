@@ -1,0 +1,51 @@
+<section class="text-gray-600 body-font">
+  <div class="fichaje">
+    <div class="container mx-auto flex px-5 py-2 items-center justify-center flex-col">
+      <img class="lg:w-1/6 md:w-3/6 w-5/6  object-cover object-center rounded rounded-full" alt="hero"
+        src="{{decodedUserFichar.image}}">
+      @if (!bloqueado) {
+      <span
+        class="bg-red-500 text-neutral-100 text-xs font-medium me-2 px-2.5 py-0.5 my-6 rounded dark:bg-green-900 dark:text-green-300 my-2">Fuera
+        De La Oficina</span>
+      }@else {
+      <span
+        class="bg-green-500 text-neutral-100 text-xs font-medium me-2 px-2.5 py-0.5 my-6 rounded dark:bg-green-900 dark:text-green-300 my-2">Trabajando</span>
+      }
+
+      <div class="text-center lg:w-2/3 w-full">
+        <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">{{decodedUserFichar.nombre}}
+          @if (decodedUserFichar.admin) {
+          <span
+            class="bg-purple-500 text-neutral-100 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Admin</span>
+          }
+          <a [routerLink]="['/header/tareas']"> <span
+              class="bg-blue-500 text-neutral-100 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Tareas
+              Asignadas: {{tareas}}</span></a>
+
+        </h1>
+
+        <p>{{textoEntradaSalida}}</p>
+        <div class="flex flex-col justify-center items-center py-3">
+          <label for="miSelect" class="block text-gray-700 text-sm font-bold mb-2">Motivo salida:</label>
+          <select id="miSelect" name="miSelect" (change)="onSelectChange($event)" class="block w-60 bg-white border border-gray-300 rounded-md py-2 px-3 focus:outline-none
+                        focus:border-indigo-500">
+            <option value="Selecciona un motivo" disabled selected>Selecciona un motivo</option>
+            <option value="Medico">Médico</option>
+            <option value="Vacaciones">Vacaciones</option>
+            <option value="Asuntos Familiares">Asuntos Familiares</option>
+            <option value="Asuntos Personales">Asuntos Personales</option>
+            <option value="Reunion Cliente">Reunión Cliente</option>
+          </select>
+        </div>
+        <div class="flex justify-center">
+          <button
+            class="inline-flex text-white bg-blue-500 border-0 py-2 px-6 focus:outline-none hover:bg-blue-600 rounded text-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+            (click)="workerFichar()" [disabled]="bloqueado">Entrada</button>
+          <button
+            class="ml-4 inline-flex text-white bg-yellow-500 border-0 py-2 px-6 focus:outline-none hover:bg-yellow-600 rounded text-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+            (click)="workerDesfichar()" [disabled]="!bloqueado">Salida</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

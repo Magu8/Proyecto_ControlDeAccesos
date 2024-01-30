@@ -1,0 +1,11 @@
+.fichaje {
+  justify-content: center;
+}
+
+@media (max-width: 674px) {
+  .fichaje {
+    justify-content: center;
+    margin-top: 2px;
+    margin-bottom: 30px;
+  }
+}

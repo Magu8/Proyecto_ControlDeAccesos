@@ -1,0 +1,67 @@
+.logoMisFichas {
+  display: flex;
+  margin-top: 3px;
+}
+
+.logoMisFichas img {
+  width: 25px;
+}
+
+.logoEditarRegistros {
+  display: flex;
+  margin-left: 20px;
+  margin-top: 3px;
+}
+
+.logoEditarRegistros img {
+  width: 25px;
+}
+
+.logoIrontec· {
+  border-radius: 30px;
+  cursor: pointer;
+}
+.logoIrontec·:hover {
+  border-radius: 90px;
+  scale: 1.1;
+  cursor: pointer;
+}
+
+.gorroNavidad {
+  position: absolute;
+  transform: translate(-10%, -60%);
+  transform: rotate(15deg);
+  width: 50px;
+  height: auto;
+  top: 7px;
+  margin-left: 30px;
+  z-index: 2; /* Asegúrate de que este valor sea mayor que el del box form */
+}
+.gorroNavidad:hover {
+  scale: 1.1;
+  position: absolute;
+  transform: translate(-10%, -60%);
+  transform: rotate(15deg);
+  width: 50px;
+  height: auto;
+  top: 7px;
+  margin-left: 30px;
+  z-index: 2; /* Asegúrate de que este valor sea mayor que el del box form */
+}
+
+.bienvenido a {
+  font-size: 25px;
+}
+
+header button {
+  background-color: rgba(124, 124, 124, 0.129);
+}
+header button:hover {
+  background-color: rgba(124, 124, 124, 0.218);
+}
+
+@media (max-width: 674px) {
+  .bienvenido a {
+    font-size: 18px;
+  }
+}

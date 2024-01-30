@@ -1,0 +1,148 @@
+<h1 class="text-center text-3xl">
+  Registro de {{registros?.[0]?.usuario?.nombre}}
+</h1>
+<h2 class="text-center m-6">Horas Totales: {{totalHoras}}</h2>
+
+
+<div class="flex flex-col lg:flex-row items-center justify-center rounded-md py-5 mx-20">
+  <div class="flex-col mx-2">
+    <span>Año</span>
+    <select id="miSelect" name="miSelect" class="block w-60 bg-white border border-gray-300 rounded-md py-0.5 px-3 focus:outline-none 
+  focus:border-indigo-500" [(ngModel)]="anioSelected" (change)="filtrarHoras()">
+      <option value="Selecciona un motivo" disabled selected>Selecciona Año</option>
+      @for(anio of years; track years){
+      <option [value]="anio">{{anio}}</option>
+      }
+
+    </select>
+  </div>
+  <div class="flex-col">
+    <span>Mes</span>
+    <select id="miSelect" name="miSelect" class="block w-60 bg-white border border-gray-300 rounded-md py-0.5 px-3 focus:outline-none disabled:bg-gray-200
+focus:border-indigo-500" [(ngModel)]="mesSelected" (change)="filtrarHoras()" [disabled]="disableMonth">
+      <option value="Selecciona un motivo" disabled selected>Selecciona un Mes</option>
+      @for(month of months; track months){
+      <option [value]="month.numero">{{month.nombre}}</option>
+      }
+
+    </select>
+  </div>
+  <div class="flex-col mx-2">
+    <span>Día</span>
+    <select id="miSelect" name="miSelect" class="block w-60 bg-white border border-gray-300 rounded-md py-0.5 px-3 focus:outline-none disabled:bg-gray-200
+  focus:border-indigo-500" [(ngModel)]="diaSelected" (change)="filtrarHoras()" [disabled]="disableDay">
+      <option value="Selecciona un motivo" disabled selected>Selecciona un Día</option>
+      @for(day of days; track day){
+      <option [value]="day">{{day}}</option>
+      }
+    </select>
+  </div>
+  <button
+    class="ml-4 inline-flex text-white it bg-yellow-500 mt-6 border-0 py-1 px-3 focus:outline-none hover:bg-yellow-600 rounded text-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+    (click)="resetSelects()">Borrar filtros</button>
+</div>
+
+@if (registros.length===0) {
+<p class="mt-8 flex justify-center">No hay Registros</p>
+}@else{
+@for(data of getItems(); track data._id; ){
+<!-- <div class="flex flex-col lg:flex-row lg:mt-5 p-4 m-4 gap-6 rounded-lg bg-neutral-700  text-neutral-200">
+  <div class="titleEntrada lg:w-5/12">
+    <h2 class=" text-lg">Entrada:</h2>
+    <p class="text-sm">{{ data.entrada }}</p>
+    <p class="text-sm">{{ data.localizacion_entrada }}</p>
+  </div> -->
+<div class="flex flex-col lg:flex-row lg:mt-5 p-4 m-4 gap-6 rounded-lg bg-neutral-700  text-neutral-200">
+  @if(registroAEditar && registroAEditar === data._id){
+  <form (ngSubmit)="guardarRegistroEditadoEntrada(data._id)">
+    <div class="titleEntrada flex flex-col gap-2">
+      <h2 class=" text-lg">Entrada:</h2>
+      <input type="datetime-local" class="lg:w-9/12 text-gray-900" name="salida" placeholder="{{ data.salida }}"
+        [(ngModel)]="fechaFormateadaEntrada" />
+      <div class="flex flex-row">
+        <button class="bg-blue-500 p-1 rounded"><input type="submit" value="Guardar" /></button>
+      </div>
+      <p class="text-sm">{{ data.localizacion_entrada }}</p>
+    </div>
+  </form>
+  }
+  @else {
+  <div class="titleEntrada lg:w-5/12">
+    <h2 class=" text-lg">Entrada:</h2>
+    <p class="text-sm">{{ data.entrada }}</p>
+    <p class="text-sm">{{ data.localizacion_entrada }}</p>
+  </div>
+  }
+  <div class="lg:w-7/12">
+    @if(registroAEditar && registroAEditar === data._id){
+    <form (ngSubmit)="guardarRegistroEditado(data._id)">
+      <div class="titleSalida flex flex-col lg:flex-row  ">
+        <div class="flex flex-col gap-2  w-full ">
+          <h2 class="text-lg">Salida:</h2>
+          <input type="datetime-local" class="lg:w-9/12 text-gray-900" name="salida" placeholder="{{ data.salida }}"
+            [(ngModel)]="fechaFormateada" />
+          <div class="flex flex-row">
+            <button class="bg-blue-500 p-1 rounded"><input type="submit" value="Guardar" /></button>
+          </div>
+
+          <p class="text-sm">{{ data.localizacion_salida }}</p>
+        </div>
+        <div class="flex flex-col  w-1/2">
+          <h2 class="text-lg w-2/12 ">Motivo:</h2>
+          <p class="text-sm">{{ data.motivo_salida }}</p>
+        </div>
+        <button
+          class=" inline-flex justify-center text-white it bg-gray-400 mt-6 lg:ml-16 border-0 py-1 px-3 lg:m-auto focus:outline-none hover:bg-gray-600 rounded text-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+          (click)="cancelar()">Cancelar
+        </button>
+      </div>
+    </form>
+    } @else {
+    <div class="flex flex-col lg:flex-row lg:gap-0 gap-4 ">
+      <div class="lg:w-8/12">
+        <h2 class="text-lg">Salida:</h2>
+        <p class="text-sm">{{ data.salida }}</p>
+        <p class="text-sm">{{ data.localizacion_salida }}</p>
+      </div>
+      <div class="lg:w-1/12">
+        <h2 class="text-lg">Motivo:</h2>
+        <p class="text-sm">{{ data.motivo_salida }}</p>
+      </div>
+
+      <button
+        class=" inline-flex justify-center text-white it bg-orange-500 mt-6 lg:ml-16 border-0 py-1 px-3 lg:m-auto focus:outline-none hover:bg-orange-600 rounded text-lg disabled:bg-gray-400 disabled:cursor-not-allowed"
+        (click)="editar(data._id)">Modificar
+      </button>
+    </div>
+    }
+  </div>
+</div>
+
+}
+
+
+
+<div>
+  <nav aria-label="Page navigation example">
+    <ul class="inline-flex -space-x-px text-sm">
+      <li>
+        <button [disabled]="paginaActual === 1" (click)="paginaActual = paginaActual - 1"
+          class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Anterior</button>
+      </li>
+      <li>
+        <span
+          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">Página
+          {{ paginaActual }} de {{totalItems}}</span>
+
+      </li>
+      <li>
+        <button [disabled]="getItems().length < itemsPorPagina || paginaActual == totalItems"
+          (click)="paginaActual = paginaActual + 1"
+          class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+          Siguiente</button>
+      </li>
+    </ul>
+  </nav>
+
+</div>
+}
